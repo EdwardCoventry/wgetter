@@ -249,7 +249,7 @@ def md5sum(filename, blocksize=8192):
         return m.hexdigest()
 
 
-def download(link, outdir='.', chunk_size=4096):
+def download(link, outdir='.', filename=None, chunk_size=4096):
     '''
     This is the Main function, which downloads a given link
     and saves on outdir (default = current directory)
@@ -258,14 +258,8 @@ def download(link, outdir='.', chunk_size=4096):
     fh = None
     eta = 'unknown '
     bytes_so_far = 0
-    filename = filename_from_url(link) or "."
+    filename = filename or filename_from_url(link) or "."
     cj = cjar.CookieJar()
-
-    # get filename for temp file in current directory
-    (fd_tmp, tmpfile) = tempfile.mkstemp(
-        ".tmp", prefix=filename + ".", dir=outdir)
-    os.close(fd_tmp)
-    os.unlink(tmpfile)
 
     try:
         opener = ulib.build_opener(ulib.HTTPCookieProcessor(cj))
