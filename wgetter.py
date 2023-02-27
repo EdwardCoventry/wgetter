@@ -258,7 +258,8 @@ def download(link, outdir='.', filename=None, chunk_size=4096):
     fh = None
     eta = 'unknown '
     bytes_so_far = 0
-    filename = filename or filename_from_url(link) or "."
+    outdir = str(outdir)
+    filename = str(filename) or filename_from_url(link) or "."
     cj = cjar.CookieJar()
 
     try:
