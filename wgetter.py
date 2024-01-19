@@ -262,6 +262,12 @@ def download(link, outdir='.', filename=None, chunk_size=4096):
     filename = str(filename) or filename_from_url(link) or "."
     cj = cjar.CookieJar()
 
+        # get filename for temp file in current directory
+    (fd_tmp, tmpfile) = tempfile.mkstemp(
+        ".tmp", prefix=filename + ".", dir=outdir)
+    os.close(fd_tmp)
+    os.unlink(tmpfile)
+
     try:
         opener = ulib.build_opener(ulib.HTTPCookieProcessor(cj))
         url = opener.open(link)
